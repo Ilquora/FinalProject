@@ -2,8 +2,11 @@ package entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import model.Building;
 import model.Player;
-import org.hibernate.annotations.Table;
+
+import java.util.List;
+
 
 @Entity
 @ToString
@@ -19,6 +22,7 @@ public class PlayerEntity {
 
     public void setId(Long id) {
         this.id = id;
+
     }
 }
 

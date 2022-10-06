@@ -1,5 +1,6 @@
 package service;
 
+import cache.PlayerCache;
 import lombok.extern.slf4j.Slf4j;
 import model.Player;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,14 +11,20 @@ import repository.PlayerRepository;
 @Service
 public class PlayerService {
     private final Player player;
-private final PlayerRepository playerRepository;
-@Autowired
-    public PlayerService(Player player, PlayerRepository playerRepository) {
+    private final PlayerRepository playerRepository;
+    private final PlayerCache playerCache;
+
+    @Autowired
+    private PlayerService(Player player,
+                          PlayerRepository playerRepository,
+                          PlayerCache playerCache, GameInfoService gameInfoService) {
         this.player = player;
         this.playerRepository = playerRepository;
+        this.playerCache = playerCache;
+
     }
 
-     private PlayerRepository getPlayer (Player player, PlayerRepository playerRepository){
-return playerRepository;
-     }
+   protected  Player getPlayer(Long id) {
+        return playerCache.getPlayer(id);
+    }
 }

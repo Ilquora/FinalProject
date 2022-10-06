@@ -1,18 +1,20 @@
 package model;
 
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+import java.util.List;
+
+@Data
+@Getter
+@Setter
+@ToString
 public class Player {
-    int gold;
-Long id;
-
-    public int getGold() {
-        return gold;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    private long id;
+    private int gold;
+private int food;
+private int wood;
+private List<Building> buildings;
 }
