@@ -2,9 +2,8 @@ package entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import model.Building;
-import model.Player;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 
@@ -14,17 +13,20 @@ import java.util.List;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Getter
+@Table(name = "player_entity")
 public class PlayerEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
     private Long id;
-
-    public void setId(Long id) {
-        this.id = id;
-
-    }
+    @ElementCollection
+    @Column (name = "building")
+    private List<Long> buildingsId ;
+    @Column(name="gold",columnDefinition = "Decimal(10,2) default '0.00' ")
+    private BigDecimal gold = BigDecimal.ZERO;
 }
+
+
+
 
 
 

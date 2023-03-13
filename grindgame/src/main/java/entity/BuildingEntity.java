@@ -2,10 +2,8 @@ package entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import model.Resource;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -20,15 +18,11 @@ public class BuildingEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column
-private String name;
-@ElementCollection
-@Column(name ="gives")
-private Set <Long> gives = new HashSet<>();
-@ElementCollection
-@Column (name = "needs")
-private Set <Long> needs = new HashSet<>();
-
-
+    private String name;
+@Column
+private int amt;
+    @Column
+    private int price;
 
     public Long getId() {
         return id;
@@ -37,4 +31,24 @@ private Set <Long> needs = new HashSet<>();
     public void setId(Long id) {
         this.id = id;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAmt(int amt) {
+        this.amt = amt;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public String getName() {
+        return name;
+
+    }
+
 }
+
+

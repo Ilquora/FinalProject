@@ -1,28 +1,34 @@
 package service;
-
 import lombok.extern.slf4j.Slf4j;
 import model.Player;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
-import java.lang.reflect.Field;
 @Slf4j
-
+@SpringBootApplication
+@EnableScheduling
 public class GameInfoService {
 
-    private void playerInfo() {
-        Player player = PlayerService.getPlayer();
-        log.info("Player {}: gold {} | wood {} | food {}", player.getId(), player.getGold(), player.getFood(), player.getWood());
+    private final PlayerService playerService;
+
+    public GameInfoService(PlayerService playerService){
+        this.playerService = playerService;
+    }
+    private void playerInfo () {
+        Player player = playerService.getPlayer();
+        log.info("Player {}: gold {} | wood {} | food {}",
+                player.getId(), player.getGold(), player.getFood(), player.getWood());
     }
 
     @Scheduled
             (cron = "0 0/10 * * * *")
     public void doSomething() {
-      playerInfo();
+        playerInfo();
+
     }
+//при ЗАКАЗЕ этого строения будет проверка по этому списку что у игрока есть золото 100 и дерево 50, а gives это то сколько будет ГЕНЕРИРОВАТЬСЯ ресурсов
+
 }
 
 
