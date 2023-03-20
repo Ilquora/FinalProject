@@ -1,38 +1,84 @@
+###add player
 POST http://localhost:8080/players
 Content-Type: application/json
 
 {
-  "buildings": [
+  "craft elements": [
     {
-      "id": 1,
-      "name": "Windmill",
-      "wood": 20,
-      "gold": 15,
-      "food": 10
+      "craftElementId": 1,
+      "craftElementName": "wood",
+     "quantity" : 35
     },
     {
-      "id": 2,
-      "name": "Cottage",
-      "wood": "100",
-      "gold": 150,
-      "food": 50
+      "craftElementId": 2,
+      "craftElementName": "stone",
+      "quantity": 30
+
     },
     {
-      "id": 3,
-      "name": "Bakery",
-      "wood": 210,
-      "gold": 250,
-      "food": 100
+      "craftElementId": 3,
+      "craftElementName": "glass",
+      "quantity": 50
+    },
+    {
+      "craftElementId": 4,
+      "craftElementName": "brick",
+      "quantity" : 50
     }
   ],
-  "resources" : [
-    {
-      "resource name" : "wood",
-      "quantity" :1000
-    }
-
-  ]
-
+ "gold" : 5000
 }
-###create craft pattern
-POST http://localhost:8080//craft
+
+###create building by the receipt
+POST http://localhost:8080/player/1/buildings?receiptId=1
+Content-Type: application/json
+
+###get player
+GET http://localhost:8080/player/1
+Accept: application/json
+
+###add building house
+
+POST http://localhost:8080/buildings
+Content-Type: application/json
+
+{
+  "id" : 1,
+  "name" : "house",
+  "price" : 50,
+  "amt" : 1
+}
+
+###update building house
+POST http://localhost:8080/buildings/2
+Content-Type: application/json
+
+{
+  "id" : 2,
+  "price" : 20
+}
+###add the receipt of cottage
+POST http://localhost:8080/receipts
+Content-Type: application/json
+
+{
+  "name": "wooden cottage",
+  "craftElementList": [
+    {
+      "craftElementId": 1,
+      "craftElementName": "wood",
+      "quantity": 10
+    },
+    {
+      "craftElementId": 4,
+      "craftElementName": "brick",
+      "quantity": 20
+    },
+    {
+      "craftElementId" : 3,
+      "craftElementName" : "glass",
+      "quantity" : 15
+    }
+    ],
+  "price" : 200
+  }

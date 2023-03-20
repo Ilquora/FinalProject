@@ -19,14 +19,14 @@ public class CraftReceiptConverter {
         this.converter = converter;
     }
 
-    public CraftReceipt convert(CraftReceiptEntity entity, List<CraftElement> craftElementList) {
-        return new CraftReceipt(entity.getId(), entity.getReceiptName(), craftElementList, entity.getPrice(), entity.getQuantity());
+    public CraftReceipt convert(CraftReceiptEntity entity) {
+        return new CraftReceipt(entity.getId(), entity.getReceiptName(),entity.getCraftElementList().stream().map(converter::convert).collect(Collectors.toList()), entity.getPrice(), entity.getQuantity());
     }
 
 
     public CraftReceiptEntity convert(CraftReceipt model) {
 
         return new CraftReceiptEntity(model.getId(), model.getReceiptName(), model.getPrice(),
-                model.getQuantity(), model.getCraftElements().stream().map(converter::convertToModel).collect(Collectors.toList()));
+                model.getQuantity(), model.getCraftElements().stream().map(converter::convert).collect(Collectors.toList()));
     }
 }

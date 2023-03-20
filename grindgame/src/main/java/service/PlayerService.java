@@ -37,7 +37,8 @@ public class PlayerService {
     private final PlayerConverter playerConverter;
     private final PlayerRepository playerRepository;
     private final PlayerCache playerCache;
-private  final CraftElementConverter craftElementConverter;
+    private  final CraftElementConverter craftElementConverter;
+private final CraftReceiptEntity craftReceiptEntity;
     private final BuildingRepository buildingsRepository;
     private final BuildingConverter buildingConverter;
     private  final CraftElementRepository craftElementRepository;
@@ -64,6 +65,7 @@ this.craftElementConverter = craftElementConverter;
 this.craftElement = craftElement;
 this.building = building;
 this.buildingService = buildingService;
+this.craftReceiptEntity = craftReceiptEntity;
     }
 @PostConstruct
 private void init (){
@@ -87,10 +89,10 @@ public  Player getPlayer (){
         return playerCache.getPlayer(null);
 }
 
-        @Transactional
+    @Transactional
     public  void createBuilding (Long playerId,Long craftReceiptId){
-        CraftReceiptEntity craftReceiptEntity = craftReceiptRepository.findById(craftReceiptId).orElse(null);
-            if (craftReceiptEntity == null) {
+        CraftReceiptEntity receiptEntity = craftReceiptRepository.findById(craftReceiptId).orElse(null);
+            if (receiptEntity == null) {
                 log.info("Receipt of that kind of building is not found");
                 return;
             }
@@ -104,7 +106,7 @@ public  Player getPlayer (){
                 log.info("Player haven't any building");
                 return;
             }
-            CraftReceipt craftReceipt = craftReceiptConverter.convert(craftReceiptEntity);
+           CraftReceipt craftReceipt = craftReceiptConverter.convert(receiptEntity);
             for (CraftElement element : craftReceipt.getCraftElements()){
                 Building building = buildings.stream().filter(pr -> pr.getId().equals(element.getCraftElementId()))
                         .findAny().orElse(null);
